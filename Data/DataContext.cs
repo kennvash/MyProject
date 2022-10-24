@@ -5,7 +5,7 @@ using MyStore.Models;
 
 public class DataContext : DbContext
 {
-    public DbSet<Customer> Customers { get; set; }
+    public virtual DbSet<Customer> Customers { get; set; }
     public DbSet<Item> Items { get; set; }
     public DbSet<CartItem> CartItems { get; set; }
     public DbSet<User> Users { get; set; }
@@ -31,4 +31,6 @@ public class DataContext : DbContext
     {
 
     }
+
+    public DataContext() { }
 }

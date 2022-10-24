@@ -146,4 +146,26 @@ public class CartItemsController : ControllerBase
             return StatusCode(StatusCodes.Status500InternalServerError, error);
         }
     }
+
+    [HttpDelete("clear/{id}")]
+    public IActionResult Clear(int id)
+    {
+        Customer customer = _customerService.FindById(id);
+
+        try{
+            Validator validator = new ValidateGetCustomer(customer);
+            validator.run();
+
+            if(validator.HasErrors){
+                return NotFound(validator.Payload);
+            } else {
+                return Ok(_cartItemService.ClearCartItems(id));
+            }
+        } catch (Exception e){
+            Dictionary<string, object> error = new Dictionary<string, object>();
+            error["msg"] = e.Message;
+
+            return StatusCode(StatusCodes.Status500InternalServerError, error);
+        }        
+    }
 }
